@@ -47,9 +47,6 @@ import {
   type Group,
 } from "@/types/type";
 
-// We will fetch these from the API, so we don't need them from local-storage anymore
-// import { getLabRooms, getLabAssistants, getTimeSlots, getCourses, getSections, getGroups, getGroupsBySection } from "@/lib/local-storage"
-
 export default function SchedulesPage() {
   const [schedules, setSchedules] = useState<ScheduleAssignment[]>([]);
   const [labRooms, setLabRooms] = useState<LabRoom[]>([]);
@@ -76,7 +73,6 @@ export default function SchedulesPage() {
 
   const loadData = async () => {
     try {
-      // Fetch all data from your API endpoints
       const [
         schedulesRes,
         labRoomsRes,
@@ -87,12 +83,12 @@ export default function SchedulesPage() {
         groupsRes,
       ] = await Promise.all([
         fetch("/api/schedules"),
-        fetch("/api/lab-rooms"), // You'll need to create this endpoint
-        fetch("/api/lab-assistants"), // You'll need to create this endpoint
-        fetch("/api/time-slots"), // You'll need to create this endpoint
-        fetch("/api/courses"), // You'll need to create this endpoint
-        fetch("/api/sections"), // You'll need to create this endpoint
-        fetch("/api/groups"), // You'll need to create this endpoint
+        fetch("/api/lab-rooms"),
+        fetch("/api/lab-assistants"),
+        fetch("/api/time-slots"),
+        fetch("/api/courses"),
+        fetch("/api/sections"),
+        fetch("/api/groups"),
       ]);
 
       const schedulesData = await schedulesRes.json();
@@ -120,7 +116,6 @@ export default function SchedulesPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Check for conflicts by calling an API endpoint
     const conflictCheckRes = await fetch(`/api/schedules/check-conflict`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -148,7 +143,6 @@ export default function SchedulesPage() {
 
     try {
       if (editingSchedule) {
-        // Use PUT to update the schedule
         const response = await fetch("/api/schedules", {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -162,7 +156,6 @@ export default function SchedulesPage() {
           console.error("Failed to update schedule");
         }
       } else {
-        // Use POST to create a new schedule
         const response = await fetch("/api/schedules", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -197,7 +190,6 @@ export default function SchedulesPage() {
   const handleDelete = async (id: string) => {
     if (confirm("Are you sure you want to delete this schedule assignment?")) {
       try {
-        // Use a PUT request to update the status to "inactive"
         const response = await fetch("/api/schedules", {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -214,7 +206,6 @@ export default function SchedulesPage() {
     }
   };
 
-  // Rest of the component logic remains the same
   const resetForm = () => {
     setFormData({
       courseId: "",
@@ -235,8 +226,9 @@ export default function SchedulesPage() {
   };
 
   const getLabRoom = (id: string) => labRooms.find((room) => room.id === id);
-  const getAssistant = (id: string) =>
-    assistants.find((assistant) => assistant.id === id);
+  // Corrected: find by labAssistantId
+  const getAssistant = (labAssistantId: string) =>
+    assistants.find((assistant) => assistant.labAssistantId === labAssistantId);
   const getTimeSlot = (id: string) => timeSlots.find((slot) => slot.id === id);
   const getSection = (id: string) =>
     sections.find((section) => section.id === id);
@@ -410,7 +402,10 @@ export default function SchedulesPage() {
                     {assistants
                       .filter((a) => a.isActive)
                       .map((assistant) => (
-                        <SelectItem key={assistant.id} value={assistant.id}>
+                        <SelectItem
+                          key={assistant.id}
+                          value={assistant.labAssistantId}
+                        >
                           <div className="flex flex-col">
                             <span className="font-medium">
                               {assistant.firstName} {assistant.lastName}
@@ -519,7 +514,7 @@ export default function SchedulesPage() {
                       ? getGroup(schedule.groupId)
                       : null;
                     const labRoom = getLabRoom(schedule.labRoomId);
-                    const assistant = getAssistant(schedule.labAssistantId);
+                    const assistant = getAssistant(schedule.labAssistantId); // Corrected: passing labAssistantId
                     const timeSlot = getTimeSlot(schedule.timeSlotId);
 
                     return (

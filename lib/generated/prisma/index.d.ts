@@ -7859,6 +7859,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     ScheduleAssignments?: boolean | LabAssistant$ScheduleAssignmentsArgs<ExtArgs>
+    user?: boolean | LabAssistant$userArgs<ExtArgs>
     _count?: boolean | LabAssistantCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["labAssistant"]>
 
@@ -7907,6 +7908,7 @@ export namespace Prisma {
   export type LabAssistantOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "labAssistantId" | "username" | "firstName" | "lastName" | "email" | "password" | "department" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["labAssistant"]>
   export type LabAssistantInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     ScheduleAssignments?: boolean | LabAssistant$ScheduleAssignmentsArgs<ExtArgs>
+    user?: boolean | LabAssistant$userArgs<ExtArgs>
     _count?: boolean | LabAssistantCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type LabAssistantIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -7916,6 +7918,7 @@ export namespace Prisma {
     name: "LabAssistant"
     objects: {
       ScheduleAssignments: Prisma.$ScheduleAssignmentPayload<ExtArgs>[]
+      user: Prisma.$UserPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -8324,6 +8327,7 @@ export namespace Prisma {
   export interface Prisma__LabAssistantClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     ScheduleAssignments<T extends LabAssistant$ScheduleAssignmentsArgs<ExtArgs> = {}>(args?: Subset<T, LabAssistant$ScheduleAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ScheduleAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    user<T extends LabAssistant$userArgs<ExtArgs> = {}>(args?: Subset<T, LabAssistant$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8773,6 +8777,25 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ScheduleAssignmentScalarFieldEnum | ScheduleAssignmentScalarFieldEnum[]
+  }
+
+  /**
+   * LabAssistant.user
+   */
+  export type LabAssistant$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
   }
 
   /**
@@ -11265,6 +11288,7 @@ export namespace Prisma {
     labAssistantId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    labAssistant?: boolean | User$labAssistantArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -11275,6 +11299,7 @@ export namespace Prisma {
     labAssistantId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    labAssistant?: boolean | User$labAssistantArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -11285,6 +11310,7 @@ export namespace Prisma {
     labAssistantId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    labAssistant?: boolean | User$labAssistantArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -11298,10 +11324,21 @@ export namespace Prisma {
   }
 
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "password" | "role" | "labAssistantId" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    labAssistant?: boolean | User$labAssistantArgs<ExtArgs>
+  }
+  export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    labAssistant?: boolean | User$labAssistantArgs<ExtArgs>
+  }
+  export type UserIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    labAssistant?: boolean | User$labAssistantArgs<ExtArgs>
+  }
 
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
-    objects: {}
+    objects: {
+      labAssistant: Prisma.$LabAssistantPayload<ExtArgs> | null
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       email: string
@@ -11704,6 +11741,7 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    labAssistant<T extends User$labAssistantArgs<ExtArgs> = {}>(args?: Subset<T, User$labAssistantArgs<ExtArgs>>): Prisma__LabAssistantClient<$Result.GetResult<Prisma.$LabAssistantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -11757,6 +11795,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter, which User to fetch.
      */
     where: UserWhereUniqueInput
@@ -11775,6 +11817,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter, which User to fetch.
      */
     where: UserWhereUniqueInput
@@ -11792,6 +11838,10 @@ export namespace Prisma {
      * Omit specific fields from the User
      */
     omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
     /**
      * Filter, which User to fetch.
      */
@@ -11841,6 +11891,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter, which User to fetch.
      */
     where?: UserWhereInput
@@ -11889,6 +11943,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter, which Users to fetch.
      */
     where?: UserWhereInput
@@ -11932,6 +11990,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * The data needed to create a User.
      */
     data: XOR<UserCreateInput, UserUncheckedCreateInput>
@@ -11965,6 +12027,10 @@ export namespace Prisma {
      */
     data: UserCreateManyInput | UserCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -11979,6 +12045,10 @@ export namespace Prisma {
      * Omit specific fields from the User
      */
     omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
     /**
      * The data needed to update a User.
      */
@@ -12031,6 +12101,10 @@ export namespace Prisma {
      * Limit how many Users to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -12045,6 +12119,10 @@ export namespace Prisma {
      * Omit specific fields from the User
      */
     omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
     /**
      * The filter to search for the User to update in case it exists.
      */
@@ -12072,6 +12150,10 @@ export namespace Prisma {
      */
     omit?: UserOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    /**
      * Filter which User to delete.
      */
     where: UserWhereUniqueInput
@@ -12092,6 +12174,25 @@ export namespace Prisma {
   }
 
   /**
+   * User.labAssistant
+   */
+  export type User$labAssistantArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the LabAssistant
+     */
+    select?: LabAssistantSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the LabAssistant
+     */
+    omit?: LabAssistantOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: LabAssistantInclude<ExtArgs> | null
+    where?: LabAssistantWhereInput
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -12103,6 +12204,10 @@ export namespace Prisma {
      * Omit specific fields from the User
      */
     omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
   }
 
 
@@ -12768,6 +12873,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"LabAssistant"> | Date | string
     updatedAt?: DateTimeFilter<"LabAssistant"> | Date | string
     ScheduleAssignments?: ScheduleAssignmentListRelationFilter
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }
 
   export type LabAssistantOrderByWithRelationInput = {
@@ -12783,14 +12889,15 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     ScheduleAssignments?: ScheduleAssignmentOrderByRelationAggregateInput
+    user?: UserOrderByWithRelationInput
   }
 
   export type LabAssistantWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    labAssistantId?: string
     AND?: LabAssistantWhereInput | LabAssistantWhereInput[]
     OR?: LabAssistantWhereInput[]
     NOT?: LabAssistantWhereInput | LabAssistantWhereInput[]
-    labAssistantId?: StringFilter<"LabAssistant"> | string
     username?: StringFilter<"LabAssistant"> | string
     firstName?: StringFilter<"LabAssistant"> | string
     lastName?: StringFilter<"LabAssistant"> | string
@@ -12801,7 +12908,8 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"LabAssistant"> | Date | string
     updatedAt?: DateTimeFilter<"LabAssistant"> | Date | string
     ScheduleAssignments?: ScheduleAssignmentListRelationFilter
-  }, "id">
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+  }, "id" | "labAssistantId">
 
   export type LabAssistantOrderByWithAggregationInput = {
     id?: SortOrder
@@ -13013,6 +13121,7 @@ export namespace Prisma {
     labAssistantId?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    labAssistant?: XOR<LabAssistantNullableScalarRelationFilter, LabAssistantWhereInput> | null
   }
 
   export type UserOrderByWithRelationInput = {
@@ -13023,20 +13132,22 @@ export namespace Prisma {
     labAssistantId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    labAssistant?: LabAssistantOrderByWithRelationInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: string
     email?: string
+    labAssistantId?: string
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     password?: StringFilter<"User"> | string
     role?: StringFilter<"User"> | string
-    labAssistantId?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-  }, "id" | "email">
+    labAssistant?: XOR<LabAssistantNullableScalarRelationFilter, LabAssistantWhereInput> | null
+  }, "id" | "email" | "labAssistantId">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
@@ -13512,6 +13623,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     ScheduleAssignments?: ScheduleAssignmentCreateNestedManyWithoutLabAssistantInput
+    user?: UserCreateNestedOneWithoutLabAssistantInput
   }
 
   export type LabAssistantUncheckedCreateInput = {
@@ -13527,6 +13639,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     ScheduleAssignments?: ScheduleAssignmentUncheckedCreateNestedManyWithoutLabAssistantInput
+    user?: UserUncheckedCreateNestedOneWithoutLabAssistantInput
   }
 
   export type LabAssistantUpdateInput = {
@@ -13542,6 +13655,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     ScheduleAssignments?: ScheduleAssignmentUpdateManyWithoutLabAssistantNestedInput
+    user?: UserUpdateOneWithoutLabAssistantNestedInput
   }
 
   export type LabAssistantUncheckedUpdateInput = {
@@ -13557,6 +13671,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     ScheduleAssignments?: ScheduleAssignmentUncheckedUpdateManyWithoutLabAssistantNestedInput
+    user?: UserUncheckedUpdateOneWithoutLabAssistantNestedInput
   }
 
   export type LabAssistantCreateManyInput = {
@@ -13772,9 +13887,9 @@ export namespace Prisma {
     email: string
     password: string
     role: string
-    labAssistantId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    labAssistant?: LabAssistantCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -13792,9 +13907,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
-    labAssistantId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    labAssistant?: LabAssistantUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -13822,7 +13937,6 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
-    labAssistantId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -14206,6 +14320,11 @@ export namespace Prisma {
     capacity?: SortOrder
   }
 
+  export type UserNullableScalarRelationFilter = {
+    is?: UserWhereInput | null
+    isNot?: UserWhereInput | null
+  }
+
   export type LabAssistantCountOrderByAggregateInput = {
     id?: SortOrder
     labAssistantId?: SortOrder
@@ -14393,6 +14512,11 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type LabAssistantNullableScalarRelationFilter = {
+    is?: LabAssistantWhereInput | null
+    isNot?: LabAssistantWhereInput | null
   }
 
   export type UserCountOrderByAggregateInput = {
@@ -14741,11 +14865,23 @@ export namespace Prisma {
     connect?: ScheduleAssignmentWhereUniqueInput | ScheduleAssignmentWhereUniqueInput[]
   }
 
+  export type UserCreateNestedOneWithoutLabAssistantInput = {
+    create?: XOR<UserCreateWithoutLabAssistantInput, UserUncheckedCreateWithoutLabAssistantInput>
+    connectOrCreate?: UserCreateOrConnectWithoutLabAssistantInput
+    connect?: UserWhereUniqueInput
+  }
+
   export type ScheduleAssignmentUncheckedCreateNestedManyWithoutLabAssistantInput = {
     create?: XOR<ScheduleAssignmentCreateWithoutLabAssistantInput, ScheduleAssignmentUncheckedCreateWithoutLabAssistantInput> | ScheduleAssignmentCreateWithoutLabAssistantInput[] | ScheduleAssignmentUncheckedCreateWithoutLabAssistantInput[]
     connectOrCreate?: ScheduleAssignmentCreateOrConnectWithoutLabAssistantInput | ScheduleAssignmentCreateOrConnectWithoutLabAssistantInput[]
     createMany?: ScheduleAssignmentCreateManyLabAssistantInputEnvelope
     connect?: ScheduleAssignmentWhereUniqueInput | ScheduleAssignmentWhereUniqueInput[]
+  }
+
+  export type UserUncheckedCreateNestedOneWithoutLabAssistantInput = {
+    create?: XOR<UserCreateWithoutLabAssistantInput, UserUncheckedCreateWithoutLabAssistantInput>
+    connectOrCreate?: UserCreateOrConnectWithoutLabAssistantInput
+    connect?: UserWhereUniqueInput
   }
 
   export type ScheduleAssignmentUpdateManyWithoutLabAssistantNestedInput = {
@@ -14762,6 +14898,16 @@ export namespace Prisma {
     deleteMany?: ScheduleAssignmentScalarWhereInput | ScheduleAssignmentScalarWhereInput[]
   }
 
+  export type UserUpdateOneWithoutLabAssistantNestedInput = {
+    create?: XOR<UserCreateWithoutLabAssistantInput, UserUncheckedCreateWithoutLabAssistantInput>
+    connectOrCreate?: UserCreateOrConnectWithoutLabAssistantInput
+    upsert?: UserUpsertWithoutLabAssistantInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutLabAssistantInput, UserUpdateWithoutLabAssistantInput>, UserUncheckedUpdateWithoutLabAssistantInput>
+  }
+
   export type ScheduleAssignmentUncheckedUpdateManyWithoutLabAssistantNestedInput = {
     create?: XOR<ScheduleAssignmentCreateWithoutLabAssistantInput, ScheduleAssignmentUncheckedCreateWithoutLabAssistantInput> | ScheduleAssignmentCreateWithoutLabAssistantInput[] | ScheduleAssignmentUncheckedCreateWithoutLabAssistantInput[]
     connectOrCreate?: ScheduleAssignmentCreateOrConnectWithoutLabAssistantInput | ScheduleAssignmentCreateOrConnectWithoutLabAssistantInput[]
@@ -14774,6 +14920,16 @@ export namespace Prisma {
     update?: ScheduleAssignmentUpdateWithWhereUniqueWithoutLabAssistantInput | ScheduleAssignmentUpdateWithWhereUniqueWithoutLabAssistantInput[]
     updateMany?: ScheduleAssignmentUpdateManyWithWhereWithoutLabAssistantInput | ScheduleAssignmentUpdateManyWithWhereWithoutLabAssistantInput[]
     deleteMany?: ScheduleAssignmentScalarWhereInput | ScheduleAssignmentScalarWhereInput[]
+  }
+
+  export type UserUncheckedUpdateOneWithoutLabAssistantNestedInput = {
+    create?: XOR<UserCreateWithoutLabAssistantInput, UserUncheckedCreateWithoutLabAssistantInput>
+    connectOrCreate?: UserCreateOrConnectWithoutLabAssistantInput
+    upsert?: UserUpsertWithoutLabAssistantInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutLabAssistantInput, UserUpdateWithoutLabAssistantInput>, UserUncheckedUpdateWithoutLabAssistantInput>
   }
 
   export type ScheduleAssignmentCreateNestedManyWithoutTimeSlotInput = {
@@ -14910,6 +15066,22 @@ export namespace Prisma {
 
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
+  }
+
+  export type LabAssistantCreateNestedOneWithoutUserInput = {
+    create?: XOR<LabAssistantCreateWithoutUserInput, LabAssistantUncheckedCreateWithoutUserInput>
+    connectOrCreate?: LabAssistantCreateOrConnectWithoutUserInput
+    connect?: LabAssistantWhereUniqueInput
+  }
+
+  export type LabAssistantUpdateOneWithoutUserNestedInput = {
+    create?: XOR<LabAssistantCreateWithoutUserInput, LabAssistantUncheckedCreateWithoutUserInput>
+    connectOrCreate?: LabAssistantCreateOrConnectWithoutUserInput
+    upsert?: LabAssistantUpsertWithoutUserInput
+    disconnect?: LabAssistantWhereInput | boolean
+    delete?: LabAssistantWhereInput | boolean
+    connect?: LabAssistantWhereUniqueInput
+    update?: XOR<XOR<LabAssistantUpdateToOneWithWhereWithoutUserInput, LabAssistantUpdateWithoutUserInput>, LabAssistantUncheckedUpdateWithoutUserInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -15594,6 +15766,29 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type UserCreateWithoutLabAssistantInput = {
+    id?: string
+    email: string
+    password: string
+    role: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserUncheckedCreateWithoutLabAssistantInput = {
+    id?: string
+    email: string
+    password: string
+    role: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserCreateOrConnectWithoutLabAssistantInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutLabAssistantInput, UserUncheckedCreateWithoutLabAssistantInput>
+  }
+
   export type ScheduleAssignmentUpsertWithWhereUniqueWithoutLabAssistantInput = {
     where: ScheduleAssignmentWhereUniqueInput
     update: XOR<ScheduleAssignmentUpdateWithoutLabAssistantInput, ScheduleAssignmentUncheckedUpdateWithoutLabAssistantInput>
@@ -15608,6 +15803,35 @@ export namespace Prisma {
   export type ScheduleAssignmentUpdateManyWithWhereWithoutLabAssistantInput = {
     where: ScheduleAssignmentScalarWhereInput
     data: XOR<ScheduleAssignmentUpdateManyMutationInput, ScheduleAssignmentUncheckedUpdateManyWithoutLabAssistantInput>
+  }
+
+  export type UserUpsertWithoutLabAssistantInput = {
+    update: XOR<UserUpdateWithoutLabAssistantInput, UserUncheckedUpdateWithoutLabAssistantInput>
+    create: XOR<UserCreateWithoutLabAssistantInput, UserUncheckedCreateWithoutLabAssistantInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutLabAssistantInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutLabAssistantInput, UserUncheckedUpdateWithoutLabAssistantInput>
+  }
+
+  export type UserUpdateWithoutLabAssistantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserUncheckedUpdateWithoutLabAssistantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ScheduleAssignmentCreateWithoutTimeSlotInput = {
@@ -15790,6 +16014,7 @@ export namespace Prisma {
     isActive: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    user?: UserCreateNestedOneWithoutLabAssistantInput
   }
 
   export type LabAssistantUncheckedCreateWithoutScheduleAssignmentsInput = {
@@ -15804,6 +16029,7 @@ export namespace Prisma {
     isActive: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    user?: UserUncheckedCreateNestedOneWithoutLabAssistantInput
   }
 
   export type LabAssistantCreateOrConnectWithoutScheduleAssignmentsInput = {
@@ -16003,6 +16229,7 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneWithoutLabAssistantNestedInput
   }
 
   export type LabAssistantUncheckedUpdateWithoutScheduleAssignmentsInput = {
@@ -16017,6 +16244,7 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUncheckedUpdateOneWithoutLabAssistantNestedInput
   }
 
   export type TimeSlotUpsertWithoutScheduleAssignmentsInput = {
@@ -16050,6 +16278,82 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type LabAssistantCreateWithoutUserInput = {
+    id?: string
+    labAssistantId: string
+    username: string
+    firstName: string
+    lastName: string
+    email: string
+    password: string
+    department: string
+    isActive: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    ScheduleAssignments?: ScheduleAssignmentCreateNestedManyWithoutLabAssistantInput
+  }
+
+  export type LabAssistantUncheckedCreateWithoutUserInput = {
+    id?: string
+    labAssistantId: string
+    username: string
+    firstName: string
+    lastName: string
+    email: string
+    password: string
+    department: string
+    isActive: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    ScheduleAssignments?: ScheduleAssignmentUncheckedCreateNestedManyWithoutLabAssistantInput
+  }
+
+  export type LabAssistantCreateOrConnectWithoutUserInput = {
+    where: LabAssistantWhereUniqueInput
+    create: XOR<LabAssistantCreateWithoutUserInput, LabAssistantUncheckedCreateWithoutUserInput>
+  }
+
+  export type LabAssistantUpsertWithoutUserInput = {
+    update: XOR<LabAssistantUpdateWithoutUserInput, LabAssistantUncheckedUpdateWithoutUserInput>
+    create: XOR<LabAssistantCreateWithoutUserInput, LabAssistantUncheckedCreateWithoutUserInput>
+    where?: LabAssistantWhereInput
+  }
+
+  export type LabAssistantUpdateToOneWithWhereWithoutUserInput = {
+    where?: LabAssistantWhereInput
+    data: XOR<LabAssistantUpdateWithoutUserInput, LabAssistantUncheckedUpdateWithoutUserInput>
+  }
+
+  export type LabAssistantUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    labAssistantId?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    department?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ScheduleAssignments?: ScheduleAssignmentUpdateManyWithoutLabAssistantNestedInput
+  }
+
+  export type LabAssistantUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    labAssistantId?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    department?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ScheduleAssignments?: ScheduleAssignmentUncheckedUpdateManyWithoutLabAssistantNestedInput
   }
 
   export type ScheduleAssignmentCreateManyLabRoomInput = {

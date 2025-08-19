@@ -28,7 +28,31 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const data = await request.json();
-    const newSchedule = await prisma.scheduleAssignment.create({ data });
+
+    // Deconstruct the data to ensure labAssistantId is included
+    const {
+      courseId,
+      sectionId,
+      groupId,
+      labRoomId,
+      labAssistantId, // This is the key field from the client
+      timeSlotId,
+      status,
+    } = data;
+
+    // Create the new schedule assignment with the labAssistantId
+    const newSchedule = await prisma.scheduleAssignment.create({
+      data: {
+        courseId,
+        sectionId,
+        groupId,
+        labRoomId,
+        labAssistantId,
+        timeSlotId,
+        status,
+      },
+    });
+
     return NextResponse.json(newSchedule, { status: 201 });
   } catch (error) {
     console.error("Failed to create schedule:", error);

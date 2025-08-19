@@ -86,7 +86,7 @@ model Group {
 
 model LabAssistant {
   id            String   @id @default(cuid())
-  labAssistantId String
+  labAssistantId String   @unique
   username      String
   firstName     String
   lastName      String
@@ -97,6 +97,7 @@ model LabAssistant {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   ScheduleAssignments ScheduleAssignment[]
+  user          User?
 }
 
 // This is your updated schema.prisma file
@@ -136,7 +137,7 @@ model ScheduleAssignment {
   section        Section      @relation(fields: [sectionId], references: [id])
   group          Group?       @relation(fields: [groupId], references: [id])
   labRoom        LabRoom      @relation(fields: [labRoomId], references: [id])
-  labAssistant   LabAssistant @relation(fields: [labAssistantId], references: [id])
+  labAssistant   LabAssistant @relation(fields: [labAssistantId], references: [labAssistantId])
   timeSlot       TimeSlot     @relation(fields: [timeSlotId], references: [id])
 }
 
@@ -145,7 +146,8 @@ model User {
   email         String   @unique
   password      String
   role          String
-  labAssistantId String?
+  labAssistantId String? @unique
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+  labAssistant  LabAssistant? @relation(fields: [labAssistantId], references: [labAssistantId])
 }

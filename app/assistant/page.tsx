@@ -20,16 +20,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { AuthService } from "@/lib/auth";
 import {
-  db,
-  type ScheduleAssignment,
-  type LabRoom,
-  type TimeSlot,
-  type Section,
-  type Group,
-  type LabAssistant,
-  type Course,
-} from "@/lib/local-storage";
-import {
   Calendar,
   Clock,
   MapPin,
@@ -40,8 +30,20 @@ import {
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+// Import your types from a separate types file
+import {
+  type ScheduleAssignment,
+  type LabRoom,
+  type TimeSlot,
+  type Section,
+  type Group,
+  type LabAssistant,
+  type Course,
+} from "@/types/type";
 
+// This interface is fine, as it's just for client-side typing
 interface ScheduleWithDetails extends ScheduleAssignment {
+  id: string;
   course: Course;
   labRoom: LabRoom;
   timeSlot: TimeSlot;
@@ -56,72 +58,53 @@ export default function AssistantDashboard() {
   const router = useRouter();
 
   useEffect(() => {
-    loadSchedules();
-  }, []);
-
-  const loadSchedules = () => {
-    const user = AuthService.getCurrentUser();
-    if (!user || !user.labAssistantId) {
-      setLoading(false);
-      return;
-    }
-
-    // Get lab assistant details
-    const assistantData = db.findById<LabAssistant>(
-      "lab_assistants",
-      user.labAssistantId
-    );
-    setAssistant(assistantData);
-
-    // Get all active schedule assignments for this lab assistant
-    const assignments = db.findWhere<ScheduleAssignment>(
-      "schedule_assignments",
-      (assignment) =>
-        assignment.labAssistantId === user.labAssistantId &&
-        assignment.status === "active"
-    );
-
-    // Enrich with related data
-    const enrichedSchedules: ScheduleWithDetails[] = assignments.map(
-      (assignment) => {
-        const course = db.findById<Course>("courses", assignment.courseId)!;
-        const labRoom = db.findById<LabRoom>(
-          "lab_rooms",
-          assignment.labRoomId
-        )!;
-        const timeSlot = db.findById<TimeSlot>(
-          "time_slots",
-          assignment.timeSlotId
-        )!;
-        const section = db.findById<Section>("sections", assignment.sectionId)!;
-        const groupRaw = assignment.groupId
-          ? db.findById<Group>("groups", assignment.groupId)
-          : undefined;
-        const group = groupRaw === null ? undefined : groupRaw;
-
-        return {
-          ...assignment,
-          course,
-          labRoom,
-          timeSlot,
-          section,
-          group,
-        };
+    // Define an async function inside useEffect to handle the fetch call
+    const fetchSchedules = async () => {
+      const user = AuthService.getCurrentUser();
+      if (!user || !user.labAssistantId) {
+        setLoading(false);
+        return;
       }
-    );
 
-    // Sort by day of week and time
-    const dayOrder = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-    enrichedSchedules.sort((a, b) => {
-      const dayA = dayOrder.indexOf(a.timeSlot.dayOfWeek);
-      const dayB = dayOrder.indexOf(b.timeSlot.dayOfWeek);
-      if (dayA !== dayB) return dayA - dayB;
-      return a.timeSlot.startTime.localeCompare(b.timeSlot.startTime);
-    });
+      try {
+        const response = await fetch(
+          `/api/assistant-schedule?labAssistantId=${user.labAssistantId}`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch schedule data");
+        }
+        const data = await response.json();
+        console.log("Fetched schedule data:", data);
 
-    setSchedules(enrichedSchedules);
-    setLoading(false);
-  };
+        setAssistant(data.assistant);
+
+        // Sort the schedules by day of week and time after fetching
+        const dayOrder = [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+        ];
+        const sortedSchedules = data.schedules.sort(
+          (a: ScheduleWithDetails, b: ScheduleWithDetails) => {
+            const dayA = dayOrder.indexOf(a.timeSlot.dayOfWeek);
+            const dayB = dayOrder.indexOf(b.timeSlot.dayOfWeek);
+            if (dayA !== dayB) return dayA - dayB;
+            return a.timeSlot.startTime.localeCompare(b.timeSlot.startTime);
+          }
+        );
+
+        setSchedules(sortedSchedules);
+      } catch (error) {
+        console.error("Error fetching schedules:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSchedules();
+  }, []); // The empty dependency array ensures this effect runs once when the component mounts
 
   const handleLogout = () => {
     AuthService.logout();
@@ -144,6 +127,7 @@ export default function AssistantDashboard() {
     );
   }
 
+  // The rest of your JSX remains the same
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">

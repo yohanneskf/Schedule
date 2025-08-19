@@ -40,7 +40,7 @@ export default function AssistantLayout({
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="lg:pl-7">
+      <div className="lg:pl-5">
         <main className="py-8 px-4 sm:px-6 lg:px-8">{children}</main>
       </div>
     </div>
