@@ -125,11 +125,6 @@ export default function AssistantLoginPage() {
             </form>
           </CardContent>
         </Card>
-
-        <div className="text-center text-sm text-gray-600">
-          <p>Demo credentials:</p>
-          <p>Email: john.doe@lab.edu | Password: assistant123</p>
-        </div>
       </div>
     </div>
   );
