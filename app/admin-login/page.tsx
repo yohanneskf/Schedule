@@ -123,7 +123,7 @@ export default function AdminLoginPage() {
 
         <div className="text-center text-sm text-gray-600">
           <p>Default admin credentials:</p>
-          <p>Email: admin@lab.edu | Password: admin123</p>
+          <p>Email: admin@1234.edu | Password: 1234</p>
         </div>
       </div>
     </div>
